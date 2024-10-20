@@ -1,0 +1,21 @@
+.btn {
+  width: 90%;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 20px 0px;
+  border-radius: 8px;
+  color: var(--white);
+  text-transform: none;
+  background-color: var(--black); 
+}
+
+.btn:hover {
+  color: var(--white);
+  background-color: black;
+}
+
+.loading {
+  font-size: 10px;
+  margin-left: 10px;
+  color: var(--white);
+}

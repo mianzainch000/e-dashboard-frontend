@@ -1,0 +1,21 @@
+.appbar {
+  background-color: var(--black); 
+}
+
+
+.buttonContainer {
+  gap: 20px; 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+
+.button {
+  font-size: 20px ;
+  color: var(--white);
+  text-transform: none ;
+  text-decoration: none ;
+ }
+
+
