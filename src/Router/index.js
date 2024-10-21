@@ -12,63 +12,24 @@ export const RouterComp = () => {
     <React.Fragment>
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="/reg"
-            element={
-              <PublicRoute>
-                <Signup />
-              </PublicRoute>
-            }
-          />
+          {/* Wrap all public routes with PublicRoute */}
+          <Route element={<PublicRoute />}>
+            <Route path="/" element={<Login />} />
+            <Route path="/reg" element={<Signup />} />
+          </Route>
 
-          <Route
-            path="/home"
-            element={
-              <PrivateRoute>
-                <Layout>
-                  <ProductPage />
-                </Layout>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/add"
-            element={
-              <Layout>
-                <h1>Add Product Page</h1>
-              </Layout>
-            }
-          />
-          <Route
-            path="/update"
-            element={
-              <PrivateRoute>
-                {" "}
-                <Layout>
-                  <h1>This is update product page</h1>
-                </Layout>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                {" "}
-                <Layout>
-                  <h1>This is profile page</h1>
-                </Layout>
-              </PrivateRoute>
-            }
-          />
+          {/* Private routes */}
+          <Route element={<PrivateRoute />}>
+            <Route element={<Layout />}>
+              <Route path="/home" element={<ProductPage />} />
+              <Route path="/add" element={<h1>Add Product Page</h1>} />
+              <Route
+                path="/update"
+                element={<h1>This is update product page</h1>}
+              />
+              <Route path="/profile" element={<h1>This is profile page</h1>} />
+            </Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </React.Fragment>

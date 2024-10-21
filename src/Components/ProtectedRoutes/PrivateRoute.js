@@ -1,11 +1,11 @@
 import Cookies from "js-cookie";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = () => {
   // Here, you should check for your authentication token or session
   const isAuthenticated = !!Cookies.get("token"); // Replace with your actual authentication logic
 
-  return isAuthenticated ? children : <Navigate to="/" />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default PrivateRoute;
