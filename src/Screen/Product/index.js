@@ -1,21 +1,6 @@
-// import React from "react";
-// import Cookies from "js-cookie";
-
-// const ProductPage = () => {
-//   const firstName = Cookies.get("firstName");
-//   const lastName = Cookies.get("lastName");
-
-//   return (
-//     <h1>
-//       Welcome, {firstName}&nbsp;{lastName}
-//     </h1>
-//   );
-// };
-
-// export default ProductPage;
-
 import React, { useEffect, useState } from "react";
 import api from "../../api";
+import DeleteModal from "../../Components/DeleteModal";
 import {
   Table,
   TableBody,
@@ -25,17 +10,60 @@ import {
   TableRow,
   Paper,
   Box,
+  Button,
 } from "@mui/material";
+import { useSnackbar } from "../../Components/Snackbar";
 
 const ProductPage = () => {
   const [data, setData] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false); // State for controlling the modal
+  const [selectedProductId, setSelectedProductId] = useState(null); // State to store the selected product ID
+  const snackBarMessage = useSnackbar();
+
   const getData = async () => {
     const res = await api.get("products");
-    setData(res?.data);
+    if (res.status === 201) {
+      setData(res?.data);
+    } else {
+      snackBarMessage({ type: "error", message: "Failed to fetch products" });
+    }
   };
+
   useEffect(() => {
     getData();
   }, []);
+
+  const handleDeleteClick = (id) => {
+    setSelectedProductId(id); // Set the selected product ID
+    setModalOpen(true); // Open the modal
+  };
+
+  const deleteProduct = async () => {
+    try {
+      const res = await api.delete(`delete-product/${selectedProductId}`);
+      if (res.status === 201) {
+        setData((prevData) =>
+          prevData.filter((product) => product._id !== selectedProductId)
+        );
+        snackBarMessage({
+          type: "success",
+          message: "Product deleted successfully",
+        });
+        setModalOpen(false); // Close the modal after successful deletion
+      } else {
+        snackBarMessage({
+          type: "error",
+          message: res?.data?.message,
+        });
+      }
+    } catch (error) {
+      snackBarMessage({
+        type: "error",
+        message: error.message || "An error occurred",
+      });
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -53,6 +81,7 @@ const ProductPage = () => {
               <TableCell>Price</TableCell>
               <TableCell>Category</TableCell>
               <TableCell>Company</TableCell>
+              <TableCell>Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -62,11 +91,29 @@ const ProductPage = () => {
                 <TableCell>{row.price}</TableCell>
                 <TableCell>{row.category}</TableCell>
                 <TableCell>{row.company}</TableCell>
+                <TableCell>
+                  <Button
+                    color="secondary"
+                    onClick={() => handleDeleteClick(row._id)}
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+
+      {/* Delete Modal */}
+      <DeleteModal
+        open={modalOpen}
+        title={"Delete Product"}
+        cancel={"Cancel"}
+        msg={"Are you sure you want to delete this product?"}
+        onClose={() => setModalOpen(false)}
+        onClick={deleteProduct} // Call deleteProduct when confirmed
+      />
     </Box>
   );
 };
