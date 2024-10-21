@@ -1,10 +1,18 @@
+import Cookies from "js-cookie";
 import { useState } from "react";
 import styles from "./styles.module.css";
-import { NavLink } from "react-router-dom";
+import DeleteModal from "../DeleteModal";
 import messages from "../../messages/en.json";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Drawer, Box, Button, Typography } from "@mui/material";
 const DrawerComp = () => {
+  const [modalOpen, setModalOpen] = useState(false);
   const [isDraweOpen, setDrawerOpen] = useState(false);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    Cookies.remove("token");
+    navigate("/");
+  };
   return (
     <Box>
       <Box onClick={() => setDrawerOpen(true)}>
@@ -60,7 +68,23 @@ const DrawerComp = () => {
               {messages.PROFILE}
             </NavLink>
           </Button>
+          <Button
+            className={styles.button}
+            onClick={() => {
+              setModalOpen(true);
+            }}
+          >
+            {messages.LOGOUT}
+          </Button>
         </Box>
+        <DeleteModal
+          open={modalOpen}
+          title={messages.LOGOUT}
+          cancel={messages.CANCEL}
+          msg={messages.ARE_YOUR_SURE_WANT_TO_LOGOUT}
+          onClose={() => setModalOpen(false)}
+          onClick={handleLogout}
+        />
       </Drawer>
     </Box>
   );

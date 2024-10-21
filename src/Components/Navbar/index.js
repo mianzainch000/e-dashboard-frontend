@@ -1,9 +1,10 @@
-import React from "react";
 import Cookies from "js-cookie";
 import DrawerComp from "../Drawer";
 import messages from "../../messages/en";
+import React, { useState } from "react";
 import styles from "./styles.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
+import DeleteModal from "../DeleteModal";
 import {
   AppBar,
   Button,
@@ -16,6 +17,7 @@ import {
 const Navbar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
   const handleLogout = () => {
     Cookies.remove("token");
@@ -52,7 +54,12 @@ const Navbar = () => {
                     {messages.PROFILE}
                   </NavLink>
                 </Button>
-                <Button className={styles.button} onClick={handleLogout}>
+                <Button
+                  className={styles.button}
+                  onClick={() => {
+                    setModalOpen(true);
+                  }}
+                >
                   Logoout
                 </Button>
               </Box>
@@ -60,6 +67,14 @@ const Navbar = () => {
           )}
         </Toolbar>
       </AppBar>
+      <DeleteModal
+        open={modalOpen}
+        title={messages.LOGOUT}
+        cancel={messages.CANCEL}
+        msg={messages.ARE_YOUR_SURE_WANT_TO_LOGOUT}
+        onClose={() => setModalOpen(false)}
+        onClick={handleLogout}
+      />
     </>
   );
 };

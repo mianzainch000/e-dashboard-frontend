@@ -9,7 +9,10 @@
   "LOGIN":"Login",
   "LOGIN_FORM":"Login Form",
   "ALREADY_ACOOUNT":"Already Acoount Login",
-  "CREAT_Account":" Create Account ? Signup"
+  "CREAT_Account":" Create Account ? Signup",
+  "ARE_YOUR_SURE_WANT_TO_LOGOUT":"Are your want to logout ?",
+  "LOGOUT":"Logout",
+  "CANCEL":"Cancel"
 
 }
 
