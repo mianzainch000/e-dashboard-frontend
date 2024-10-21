@@ -43,7 +43,7 @@ const Login = () => {
       email: Yup.string()
         .required("Email is required")
         .matches(/\S+@\S+\.\S+/, "Invalid email"),
-      password: Yup.string().password(),
+      password: Yup.string().required("Password is required"),
     }),
   });
   const postData = async (values) => {
