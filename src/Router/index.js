@@ -6,6 +6,7 @@ import ProductPage from "../Screen/Product";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PublicRoute from "../Components/ProtectedRoutes/PublicRoute";
 import PrivateRoute from "../Components/ProtectedRoutes/PrivateRoute";
+import ProductForm from "../Screen/addProduct";
 
 export const RouterComp = () => {
   return (
@@ -22,7 +23,7 @@ export const RouterComp = () => {
           <Route element={<PrivateRoute />}>
             <Route element={<Layout />}>
               <Route path="/home" element={<ProductPage />} />
-              <Route path="/add" element={<h1>Add Product Page</h1>} />
+              <Route path="/add" element={<ProductForm />} />
               <Route
                 path="/update"
                 element={<h1>This is update product page</h1>}
