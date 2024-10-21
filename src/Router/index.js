@@ -1,4 +1,5 @@
 import React from "react";
+import Login from "../Screen/login";
 import Signup from "../Screen/Signup";
 import Layout from "../Components/Layout";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -40,6 +41,7 @@ export const RouterComp = () => {
               </Layout>
             }
           />
+          <Route path="/login" element={<Login />} />
           <Route path="/reg" element={<Signup />} />
         </Routes>
       </BrowserRouter>

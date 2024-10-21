@@ -5,5 +5,8 @@
   "UPDATE_PRODUCT": "Update Product",
   "PROFILE": "Profile",
   "SIGNUP":"Signup",
-  "SIGNUP_FORM":"Signup Form"
+  "SIGNUP_FORM":"Signup Form",
+  "LOGIN":"Login",
+  "LOGIN_FORM":"Login Form"
 }
+
