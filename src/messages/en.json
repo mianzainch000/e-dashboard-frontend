@@ -3,5 +3,7 @@
   "PRODUCT": "Product",
   "ADD_PRODUCT": "Add Product",
   "UPDATE_PRODUCT": "Update Product",
-  "PROFILE": "Profile"
+  "PROFILE": "Profile",
+  "SIGNUP":"Signup",
+  "SIGNUP_FORM":"Signup Form"
 }

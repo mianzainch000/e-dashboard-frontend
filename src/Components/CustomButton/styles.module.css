@@ -1,4 +1,4 @@
-.btn {
+ .btn {
   width: 90%;
   font-size: 20px;
   cursor: pointer;
@@ -11,11 +11,11 @@
 
 .btn:hover {
   color: var(--white);
-  background-color: black;
+  background-color: var(--black)
 }
 
 .loading {
   font-size: 10px;
   margin-left: 10px;
   color: var(--white);
-}
+} 

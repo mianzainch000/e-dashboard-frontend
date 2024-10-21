@@ -1,10 +1,13 @@
 import * as Yup from "yup";
+import api from "../../api";
 import { useFormik } from "formik";
 import YupPassword from "yup-password";
 import React, { useState } from "react";
 import styles from "./styles.module.css";
+import messages from "../../messages/en";
 import logo from "../../Images/logo.png";
 import TextInput from "../../Components/TextInput";
+import { useSnackbar } from "../../Components/Snackbar";
 import CustomButton from "../../Components/CustomButton";
 import {
   useMediaQuery,
@@ -18,8 +21,9 @@ import {
 YupPassword(Yup);
 const Signup = () => {
   const theme = useTheme();
-
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [loading, setLoading] = useState(false);
+  const snackBarMessage = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -39,7 +43,10 @@ const Signup = () => {
       password: "",
       confirmPassword: "",
     },
-    onSubmit: (values) => {},
+    onSubmit: (values) => {
+      setLoading(true);
+      postData(values);
+    },
     validationSchema: Yup.object({
       firstName: Yup.string().required("First Name is required"),
       lastName: Yup.string().required("Last Name is required"),
@@ -57,7 +64,36 @@ const Signup = () => {
         .required("Confirm Password is required"),
     }),
   });
-
+  const postData = async (values) => {
+    try {
+      const data = {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        password: values.password,
+      };
+      const res = await api.post("reg", data);
+      if (res?.status === 201) {
+        snackBarMessage({
+          type: "success",
+          message: res?.data?.message,
+        });
+        formik.handleReset();
+      } else {
+        snackBarMessage({
+          type: "error",
+          message: res?.data?.message,
+        });
+      }
+    } catch (error) {
+      snackBarMessage({
+        type: "error",
+        message: error.message,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <Grid container lg={12}>
       <Grid lg={6} md={6} sm={6} xs={12}>
@@ -122,7 +158,7 @@ const Signup = () => {
                   fontSize={"20px"}
                   fontWeight={"bolder"}
                 >
-                  Signup Form
+                  {messages.SIGNUP_FORM}
                 </Typography>
               </Grid>
               <Grid item xs={12} className={styles.centeredContainer}>
@@ -243,7 +279,11 @@ const Signup = () => {
               </Grid>
 
               <Grid item xs={12} className={styles.centeredContainer}>
-                <CustomButton title={"Sign up"} type="submit" />
+                <CustomButton
+                  title={messages.SIGNUP}
+                  loading={loading}
+                  type="submit"
+                />
               </Grid>
             </Grid>
           </Box>
