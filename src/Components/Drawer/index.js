@@ -26,7 +26,7 @@ const DrawerComp = () => {
         <Box p={2} height="100vh" className={styles.drawer}>
           <Button className={styles.button}>
             <NavLink
-              to="/"
+              to="/home"
               className={styles.button}
               onClick={() => setDrawerOpen(false)}
             >

@@ -1,8 +1,9 @@
 import React from "react";
+import Cookies from "js-cookie";
 import DrawerComp from "../Drawer";
 import messages from "../../messages/en";
 import styles from "./styles.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   AppBar,
   Button,
@@ -15,7 +16,11 @@ import {
 const Navbar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    Cookies.remove("token");
+    navigate("/");
+  };
   return (
     <>
       <AppBar position="sticky" className={styles.appbar}>
@@ -28,7 +33,7 @@ const Navbar = () => {
             <>
               <Box className={styles.buttonContainer}>
                 <Button className={styles.button}>
-                  <NavLink to="/" className={styles.button}>
+                  <NavLink to="/home" className={styles.button}>
                     {messages.PRODUCT}
                   </NavLink>
                 </Button>
@@ -46,6 +51,9 @@ const Navbar = () => {
                   <NavLink to="/profile" className={styles.button}>
                     {messages.PROFILE}
                   </NavLink>
+                </Button>
+                <Button className={styles.button} onClick={handleLogout}>
+                  Logoout
                 </Button>
               </Box>
             </>

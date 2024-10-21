@@ -1,11 +1,13 @@
 import * as Yup from "yup";
 import api from "../../api";
+import Cookies from "js-cookie";
 import { useFormik } from "formik";
 import YupPassword from "yup-password";
 import React, { useState } from "react";
 import styles from "./styles.module.css";
 import messages from "../../messages/en";
 import logo from "../../Images/logo.png";
+import { NavLink, useNavigate } from "react-router-dom";
 import TextInput from "../../Components/TextInput";
 import { useSnackbar } from "../../Components/Snackbar";
 import CustomButton from "../../Components/CustomButton";
@@ -25,6 +27,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const snackBarMessage = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleTogglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -46,6 +49,7 @@ const Login = () => {
       password: Yup.string().required("Password is required"),
     }),
   });
+
   const postData = async (values) => {
     try {
       const data = {
@@ -54,11 +58,17 @@ const Login = () => {
       };
       const res = await api.post("login", data);
       if (res?.status === 201) {
+        console.log("first", res);
+        Cookies.set("token", res?.data?.token);
+        Cookies.set("firstName", res?.data?.user?.firstName);
+        Cookies.set("lastName", res?.data?.user?.lastName);
         snackBarMessage({
           type: "success",
           message: res?.data?.message,
         });
         formik.handleReset();
+
+        navigate("/home");
       } else {
         snackBarMessage({
           type: "error",
@@ -74,6 +84,7 @@ const Login = () => {
       setLoading(false);
     }
   };
+
   return (
     <Grid container lg={12}>
       <Grid lg={6} md={6} sm={6} xs={12}>
@@ -138,7 +149,7 @@ const Login = () => {
                   fontSize={"20px"}
                   fontWeight={"bolder"}
                 >
-                  {messages.Login_FORM}
+                  {messages.LOGIN_FORM}
                 </Typography>
               </Grid>
 
@@ -194,6 +205,13 @@ const Login = () => {
                   loading={loading}
                   type="submit"
                 />
+              </Grid>
+              <Grid item>
+                <NavLink to="/reg" variant="body2">
+                  <Typography className={styles.alreadyAccount}>
+                    {messages.CREAT_Account}
+                  </Typography>
+                </NavLink>
               </Grid>
             </Grid>
           </Box>

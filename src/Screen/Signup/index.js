@@ -17,6 +17,7 @@ import {
   Box,
   Typography,
 } from "@mui/material";
+import { NavLink } from "react-router-dom";
 
 YupPassword(Yup);
 const Signup = () => {
@@ -284,6 +285,13 @@ const Signup = () => {
                   loading={loading}
                   type="submit"
                 />
+              </Grid>
+              <Grid item>
+                <NavLink to="/" variant="body2">
+                  <Typography className={styles.alreadyAccount}>
+                    Already Account ? Login
+                  </Typography>
+                </NavLink>
               </Grid>
             </Grid>
           </Box>

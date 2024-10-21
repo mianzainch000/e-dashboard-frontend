@@ -7,6 +7,9 @@
   "SIGNUP":"Signup",
   "SIGNUP_FORM":"Signup Form",
   "LOGIN":"Login",
-  "LOGIN_FORM":"Login Form"
+  "LOGIN_FORM":"Login Form",
+  "ALREADY_ACOOUNT":"Already Acoount Login",
+  "CREAT_Account":" Create Account ? Signup"
+
 }
 
