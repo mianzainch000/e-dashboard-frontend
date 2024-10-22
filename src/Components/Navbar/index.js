@@ -1,10 +1,10 @@
 import Cookies from "js-cookie";
 import DrawerComp from "../Drawer";
-import messages from "../../messages/en";
 import React, { useState } from "react";
+import messages from "../../messages/en";
 import styles from "./styles.module.css";
-import { NavLink, useNavigate } from "react-router-dom";
 import DeleteModal from "../DeleteModal";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   AppBar,
   Button,
@@ -16,9 +16,10 @@ import {
 
 const Navbar = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [modalOpen, setModalOpen] = useState(false);
-  const navigate = useNavigate();
+  // Logout Function
   const handleLogout = () => {
     Cookies.remove("token");
     navigate("/");

@@ -17,7 +17,7 @@ const DrawerComp = () => {
     <Box>
       <Box onClick={() => setDrawerOpen(true)}>
         <Box>
-          <h1>=</h1>
+          <Typography variant="h2">=</Typography>
         </Box>
       </Box>
 

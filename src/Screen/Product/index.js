@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
 import api from "../../api";
+import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import DeleteModal from "../../Components/DeleteModal";
+import { useSnackbar } from "../../Components/Snackbar";
 import {
   Table,
   TableBody,
@@ -12,14 +14,12 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import { useSnackbar } from "../../Components/Snackbar";
-import { Link } from "react-router-dom";
 
 const ProductPage = () => {
-  const [data, setData] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false); // State for controlling the modal
-  const [selectedProductId, setSelectedProductId] = useState(null); // State to store the selected product ID
   const snackBarMessage = useSnackbar();
+  const [data, setData] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null); // State to store the selected product ID
 
   const getData = async () => {
     const res = await api.get("products");

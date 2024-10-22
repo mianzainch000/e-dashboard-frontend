@@ -1,13 +1,13 @@
 import React from "react";
 import Login from "../Screen/login";
 import Signup from "../Screen/Signup";
+import Update from "../Screen/Update";
 import Layout from "../Components/Layout";
 import ProductPage from "../Screen/Product";
+import ProductForm from "../Screen/addProduct";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PublicRoute from "../Components/ProtectedRoutes/PublicRoute";
 import PrivateRoute from "../Components/ProtectedRoutes/PrivateRoute";
-import ProductForm from "../Screen/addProduct";
-import Update from "../Screen/Update";
 
 export const RouterComp = () => {
   return (

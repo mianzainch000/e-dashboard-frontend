@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
-import { useFormik } from "formik";
+import React from "react";
 import * as Yup from "yup";
 import api from "../../api";
-import { TextField, Button, Box, Container } from "@mui/material";
-import { useSnackbar } from "../../Components/Snackbar";
+import { useFormik } from "formik";
+import messages from "../../messages/en";
 import { useParams } from "react-router-dom";
+import { useSnackbar } from "../../Components/Snackbar";
+import { TextField, Button, Box, Container, Typography } from "@mui/material";
+
 const ProductForm = () => {
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
@@ -94,11 +96,12 @@ const ProductForm = () => {
             gap: 2,
           }}
         >
-          <h1>Add Product</h1>
+          <Typography variant="h4">{messages.ADD_PRODUCT}</Typography>
           <TextField
             fullWidth
             id="name"
             name="name"
+            autoComplete="off"
             label="Product Name"
             value={formik.values.name}
             onChange={formik.handleChange}
@@ -114,6 +117,7 @@ const ProductForm = () => {
             name="price"
             label="Price"
             type="number"
+            autoComplete="off"
             value={formik.values.price}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -127,6 +131,7 @@ const ProductForm = () => {
             id="category"
             name="category"
             label="Category"
+            autoComplete="off"
             value={formik.values.category}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -140,6 +145,7 @@ const ProductForm = () => {
             id="company"
             name="company"
             label="Company"
+            autoComplete="off"
             value={formik.values.company}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -149,7 +155,7 @@ const ProductForm = () => {
           />
 
           <Button color="primary" variant="contained" fullWidth type="submit">
-            Submit
+            {messages.SUBMIT}
           </Button>
         </Box>
       </Container>

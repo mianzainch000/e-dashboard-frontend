@@ -8,14 +8,19 @@ const DeleteModal = ({ open, onClose, msg, title, cancel, onClick }) => {
     <Modal open={open} onClose={onClose}>
       <Box className={styles.main}>
         <Box className={styles.logoContainer}>
-         <Typography variant="h2" onClick={onClose} className={styles.crossIcon}>x</Typography>
-        </Box>
-
+          <Typography
+            variant="h6"
+            onClick={onClose}
+            className={styles.crossIcon}
+          >
+            x
+          </Typography>
+        </Box>{" "}
         <Typography className={styles.msg}>{msg}</Typography>
         <Box className={styles.buttonContainer}>
           {" "}
           <Button onClick={onClose}>
-            <Typography className={styles.btnText}> {cancel}</Typography>
+            <Typography className={styles.btnText}>{cancel}</Typography>
           </Button>
           &nbsp;&nbsp;
           <Button

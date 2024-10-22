@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
-import { useFormik } from "formik";
 import * as Yup from "yup";
 import api from "../../api";
-import { TextField, Button, Box, Container } from "@mui/material";
-import { useSnackbar } from "../../Components/Snackbar";
+import { useFormik } from "formik";
+import React, { useEffect } from "react";
+import messages from "../../messages/en";
 import { useParams } from "react-router-dom";
+import { useSnackbar } from "../../Components/Snackbar";
+import { TextField, Button, Box, Container, Typography } from "@mui/material";
+
 const Update = () => {
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
@@ -24,11 +26,11 @@ const Update = () => {
     },
     validationSchema,
     onSubmit: (values) => {
-      postData(values);
+      updateData(values);
     },
   });
   const snackBarMessage = useSnackbar();
-  const postData = async (values) => {
+  const updateData = async (values) => {
     try {
       const data = {
         name: values.name,
@@ -94,12 +96,13 @@ const Update = () => {
             gap: 2,
           }}
         >
-          <h1>Add Product</h1>
+          <Typography variant="h4">{messages.UPDATE_PRODUCT}</Typography>
           <TextField
             fullWidth
             id="name"
             name="name"
             label="Product Name"
+            autoComplete="off"
             value={formik.values.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -114,6 +117,7 @@ const Update = () => {
             name="price"
             label="Price"
             type="number"
+            autoComplete="off"
             value={formik.values.price}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -127,6 +131,7 @@ const Update = () => {
             id="category"
             name="category"
             label="Category"
+            autoComplete="off"
             value={formik.values.category}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -140,6 +145,7 @@ const Update = () => {
             id="company"
             name="company"
             label="Company"
+            autoComplete="off"
             value={formik.values.company}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -149,7 +155,7 @@ const Update = () => {
           />
 
           <Button color="primary" variant="contained" fullWidth type="submit">
-            Update
+            {messages.UPDATE}
           </Button>
         </Box>
       </Container>
