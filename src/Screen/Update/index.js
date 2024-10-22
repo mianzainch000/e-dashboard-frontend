@@ -36,7 +36,7 @@ const Update = () => {
         category: values.category,
         company: values.company,
       };
-      const res = await api.post("add-product", data);
+      const res = await api.put(`update-product/${id}`, data);
       if (res?.status === 201) {
         snackBarMessage({
           type: "success",
