@@ -13,6 +13,7 @@ import {
   Button,
 } from "@mui/material";
 import { useSnackbar } from "../../Components/Snackbar";
+import { Link } from "react-router-dom";
 
 const ProductPage = () => {
   const [data, setData] = useState([]);
@@ -82,6 +83,7 @@ const ProductPage = () => {
               <TableCell>Category</TableCell>
               <TableCell>Company</TableCell>
               <TableCell>Delete</TableCell>
+              <TableCell>Update</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -98,6 +100,9 @@ const ProductPage = () => {
                   >
                     Delete
                   </Button>
+                </TableCell>
+                <TableCell>
+                  <Link to={`/update/${row._id}`}>Edit Product</Link>
                 </TableCell>
               </TableRow>
             ))}

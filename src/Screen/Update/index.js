@@ -5,7 +5,7 @@ import api from "../../api";
 import { TextField, Button, Box, Container } from "@mui/material";
 import { useSnackbar } from "../../Components/Snackbar";
 import { useParams } from "react-router-dom";
-const ProductForm = () => {
+const Update = () => {
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
     price: Yup.number()
@@ -59,20 +59,20 @@ const ProductForm = () => {
   };
 
   // Values in form
-  // const { id } = useParams();
+  const { id } = useParams();
 
-  // const fetchingData = async () => {
-  //     const response = await api.get(`eiditProduct/${id}`);
-  //   formik.setValues({
-  //     name: response.data.name,
-  //     price: response.data.price,
-  //     category: response.data.category,
-  //     company: response.data.company,
-  //   });
-  // };
-  // useEffect(() => {
-  //   fetchingData();
-  // }, []);
+  const fetchingData = async () => {
+    const response = await api.get(`eiditProduct/${id}`);
+    formik.setValues({
+      name: response.data.name,
+      price: response.data.price,
+      category: response.data.category,
+      company: response.data.company,
+    });
+  };
+  useEffect(() => {
+    fetchingData();
+  }, []);
 
   return (
     <>
@@ -149,7 +149,7 @@ const ProductForm = () => {
           />
 
           <Button color="primary" variant="contained" fullWidth type="submit">
-            Submit
+            Update
           </Button>
         </Box>
       </Container>
@@ -157,4 +157,4 @@ const ProductForm = () => {
   );
 };
 
-export default ProductForm;
+export default Update;
