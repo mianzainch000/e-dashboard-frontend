@@ -3,11 +3,12 @@ import api from "../../api";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import messages from "../../messages/en";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSnackbar } from "../../Components/Snackbar";
 import { TextField, Button, Box, Container, Typography } from "@mui/material";
 
 const Update = () => {
+  const navigate = useNavigate();
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
     price: Yup.number()
@@ -45,6 +46,7 @@ const Update = () => {
           message: res?.data?.message,
         });
         formik.handleReset();
+        navigate("/home");
       } else {
         snackBarMessage({
           type: "error",

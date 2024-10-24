@@ -13,13 +13,16 @@ import {
   Paper,
   Box,
   Button,
+  TextField, // Import TextField for the search bar
+  Typography, // Import Typography for displaying the no records message
 } from "@mui/material";
 
 const ProductPage = () => {
   const snackBarMessage = useSnackbar();
   const [data, setData] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedProductId, setSelectedProductId] = useState(null); // State to store the selected product ID
+  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(""); // State to store search input
 
   const getData = async () => {
     const res = await api.get("products");
@@ -35,8 +38,8 @@ const ProductPage = () => {
   }, []);
 
   const handleDeleteClick = (id) => {
-    setSelectedProductId(id); // Set the selected product ID
-    setModalOpen(true); // Open the modal
+    setSelectedProductId(id);
+    setModalOpen(true);
   };
 
   const deleteProduct = async () => {
@@ -50,7 +53,7 @@ const ProductPage = () => {
           type: "success",
           message: "Product deleted successfully",
         });
-        setModalOpen(false); // Close the modal after successful deletion
+        setModalOpen(false);
       } else {
         snackBarMessage({
           type: "error",
@@ -65,15 +68,36 @@ const ProductPage = () => {
     }
   };
 
+  // Filter the products based on searchQuery
+  // Filter the products based on searchQuery (by name or price)
+  const filteredData = data.filter((product) => {
+    const nameMatch = product.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const priceMatch = product.price.toString().includes(searchQuery);
+    return nameMatch || priceMatch;
+  });
+
   return (
     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "40vh",
+        flexDirection: "column", // Align items vertically
+        // height: "100vh",
+        padding: 2,
       }}
     >
+      {/* Search Bar */}
+      <TextField
+        label="Search Products"
+        variant="outlined"
+        sx={{ marginBottom: 2, width: "45%" }} // Style the search bar
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)} // Update the search query
+      />
+
       <TableContainer component={Paper} sx={{ maxWidth: 600, margin: "auto" }}>
         <Table>
           <TableHead>
@@ -87,25 +111,35 @@ const ProductPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row) => (
-              <TableRow key={row._id}>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.price}</TableCell>
-                <TableCell>{row.category}</TableCell>
-                <TableCell>{row.company}</TableCell>
-                <TableCell>
-                  <Button
-                    color="secondary"
-                    onClick={() => handleDeleteClick(row._id)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-                <TableCell>
-                  <Link to={`/update/${row._id}`}>Edit Product</Link>
+            {filteredData.length > 0 ? (
+              filteredData.map((row) => (
+                <TableRow key={row._id}>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell>{row.price}</TableCell>
+                  <TableCell>{row.category}</TableCell>
+                  <TableCell>{row.company}</TableCell>
+                  <TableCell>
+                    <Button
+                      color="secondary"
+                      onClick={() => handleDeleteClick(row._id)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Link to={`/update/${row._id}`}>Edit Product</Link>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={6} align="center">
+                  <Typography variant="body1" color="textSecondary">
+                    No products match your search.
+                  </Typography>
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -117,7 +151,7 @@ const ProductPage = () => {
         cancel={"Cancel"}
         msg={"Are you sure you want to delete this product?"}
         onClose={() => setModalOpen(false)}
-        onClick={deleteProduct} // Call deleteProduct when confirmed
+        onClick={deleteProduct}
       />
     </Box>
   );
